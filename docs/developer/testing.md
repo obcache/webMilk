@@ -11,7 +11,18 @@ Document the project-specific process here.
 
 ## Commands
 
-Add concrete commands once the implementation stack is selected.
+```powershell
+npm run typecheck
+npm run test
+npm run build
+```
+
+Initial automated tests focus on:
+
+- state planning for continuous playback vs seek/reset behavior
+- warm-up frame generation
+- projector/backend interaction
+- PCM chunk handoff shape
 
 ## Notes
 

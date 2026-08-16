@@ -1,9 +1,34 @@
 {
-  "name": "webMilk",
+  "name": "webmilk",
   "version": "0.1.0",
   "private": true,
-  "description": "WASM / webGL2 implementation based on projectM's original c/c++ libs",
+  "description": "React-friendly ProjectM WebGL2/WASM projector runtime with deterministic state warm-up helpers.",
+  "main": "./dist/webmilk.cjs",
+  "module": "./dist/webmilk.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/webmilk.js",
+      "require": "./dist/webmilk.cjs"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.build.json && vite build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "todo": "node tools/project-mgmt/todo.js list",
     "todo:add": "node tools/project-mgmt/todo.js add",
     "ledger:list": "node tools/project-mgmt/ledger.js list",
@@ -17,5 +42,22 @@
     "commit": "node tools/project-mgmt/commit-release.js patch",
     "commit:minor": "node tools/project-mgmt/commit-release.js minor",
     "commit:major": "node tools/project-mgmt/commit-release.js major"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0 || >=19.0.0",
+    "react-dom": ">=18.0.0 || >=19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "jsdom": "^26.0.0",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.2",
+    "vite-plugin-dts": "^4.5.3",
+    "vitest": "^3.0.8"
   }
 }

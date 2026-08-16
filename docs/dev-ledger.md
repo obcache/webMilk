@@ -39,6 +39,32 @@ Rollback Strategy
 
 ## Entries
 
+### [2026-08-16] Initial webMilk Runtime Scaffold (Status: Complete)
+Author: Codex
+
+Summary
+- Added a TypeScript/Vite library scaffold for webMilk.
+- Added a framework-agnostic projector API, stateful frame planner, mock backend, React hook/component adapter, and demo harness.
+- Documented the first ProjectM WASM backend milestone and licensing risks.
+
+Impact
+- Areas/modules: package.json, README.md, tsconfig, vite config, src, examples, docs
+- Risk: Medium
+
+Validation
+- [ ] Run `npm install`.
+- [ ] Run `npm run typecheck`.
+- [ ] Run `npm run test`.
+- [ ] Run `npm run build`.
+
+Follow-ups
+- [ ] Build/export the ProjectM WASM API surface.
+- [ ] Replace the mock backend with the real WebGL2/WASM backend.
+- [ ] Add preset and texture fixtures after licensing review.
+
+Rollback Strategy
+- Revert this scaffold commit and return to the initial project-management-only repository state.
+
 ### [YYYY-MM-DD] Initial Project Bootstrap (Status: Complete)
 Author: reponator
 

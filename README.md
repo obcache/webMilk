@@ -1,30 +1,52 @@
 # webMilk
 
-WASM / webGL2 implementation based on projectM's original c/c++ libs
+webMilk is a browser-native ProjectM projector framework for React and modern web applications.
 
-## Project Status
+The goal is to expose ProjectM's WebGL2/WASM rendering through a small, reusable TypeScript API that handles ProjectM's stateful rendering model without forcing application developers to manage preset history, seek warm-up, or render-loop continuity themselves.
 
-- Visibility: Private
+## Current Status
+
 - Version: 0.1.0
-- Created: 2026-08-16
+- Stage: initial scaffold / ProjectM backend integration pending
+- Runtime target: browser, Electron renderer, and other WebGL2-capable environments
 
-## Overview
+## Design Goals
 
-Describe what this project does, who it serves, and the primary workflow.
+- Keep the core runtime framework-agnostic.
+- Provide React adapters as a thin layer over the core.
+- Render ProjectM output into a supplied `HTMLCanvasElement` or `OffscreenCanvas`.
+- Use explicit frame timestamps for deterministic preview/export workflows.
+- Preserve ProjectM state during continuous playback.
+- Rebuild the minimum necessary context history after seeks or discontinuities.
 
-## Features
+## Planned Runtime Contract
 
-- [ ] Document core capabilities as they are implemented.
+```ts
+const projector = await createWebMilkProjector({
+  backend,
+  canvas,
+  width: 1920,
+  height: 1080,
+  fps: 60,
+  warmupSeconds: 3,
+});
 
-## Installation
-
-Document prerequisites and setup steps.
-
-## Usage
-
-Show the common commands and user-facing workflows.
+await projector.loadPreset({ data: presetText });
+await projector.renderFrame({
+  timeSec: 42.5,
+  audio: decodedAudio,
+});
+```
 
 ## Development
+
+```powershell
+npm install
+npm run typecheck
+npm run test
+npm run build
+npm run dev
+```
 
 Project workflow files live under `docs/` and reusable automation lives under `tools/project-mgmt/`.
 
@@ -35,18 +57,8 @@ npm run handoff
 npm run version:show
 ```
 
-## Testing
-
-Document automated and manual test coverage as the project grows.
-
-## Build And Release
-
-Use `npm run commit -- "message"` for a patch release commit. Use `npm run commit:minor -- "message"` or `npm run commit:major -- "message"` when the change requires a larger version bump.
-
-## Contributing
-
-Document branch, review, commit, and release expectations.
-
 ## License
 
-Add licensing details before public distribution.
+Project license is not finalized.
+
+Important: ProjectM is LGPL, and preset/texture packs have separate licensing. Public distribution must preserve those obligations before bundling compiled ProjectM artifacts or preset packs.

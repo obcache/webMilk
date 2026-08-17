@@ -19,6 +19,7 @@ npm run typecheck
 npm run test
 npm run build
 npm run dev
+npm run wasm:projectm
 ```
 
 Current build shape:
@@ -30,6 +31,11 @@ Current build shape:
 - `src/backends/projectMExports.ts` documents the expected ProjectM WASM export surface.
 
 See `docs/developer/projectm-wasm-plan.md` for the backend implementation plan.
+See `docs/developer/plugin-adapter-authoring.md` for the plug-in definition and adapter contract.
+
+`npm run wasm:projectm` requires an activated Emscripten environment. It currently defaults to `E:\Production\Coding\projectm` as the local ProjectM checkout.
+
+On Windows, install Ninja or MinGW make before running the WASM build. The script checks for `ninja.exe` first, then `mingw32-make.exe`.
 
 ## Notes
 

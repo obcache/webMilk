@@ -7,6 +7,7 @@ This file is the planning mechanism for active work. Keep it current enough that
 - [ ] Build the first ProjectM WebGL2/WASM projector proof-of-life.
   - Create a framework-agnostic projector runtime.
   - Keep React support as a thin adapter over the runtime.
+  - Prioritize React and modern web/Electron consumers; non-React and legacy framework interoperability is not a requirement.
   - Prove explicit frame-time rendering, audio PCM feed, and warm-up/rebuild behavior before adding higher-level UI.
 
 ## Next Actions
@@ -17,7 +18,16 @@ This file is the planning mechanism for active work. Keep it current enough that
 - [x] Add mock ProjectM backend for tests and demo harness.
 - [ ] Build/export ProjectM WASM with the required C API surface.
   - Required export surface documented in `docs/developer/projectm-wasm-plan.md`.
+  - Experimental adapter target added under `wasm/projectm-adapter`.
+  - Build helper added as `npm run wasm:projectm`.
+  - Local build has successfully generated `webmilk-projectm.js` and `webmilk-projectm.wasm`.
 - [ ] Replace the mock backend with a WebGL2/WASM backend implementation.
+  - TypeScript backend is implemented against the expected Emscripten module shape.
+  - Remaining work is producing and loading real ProjectM WASM artifacts.
+- [ ] Add a host-style smoke harness that only uses plug-in definitions plus generic frame requests.
+  - Core plug-in definition and runner types have been added.
+  - Adapter authoring contract documented in `docs/developer/plugin-adapter-authoring.md`.
+  - Browser smoke test added as `npm run test:browser`.
 - [ ] Add one known-good preset fixture and texture fixture.
 - [ ] Validate deterministic sequential rendering at 60 FPS timestamps.
 - [ ] Validate seek reset plus warm-up behavior.

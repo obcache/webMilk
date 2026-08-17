@@ -5,6 +5,8 @@ node_modules/
 dist/
 build/
 release/
+public/vendor/projectm/
+src/vendor/projectm/
 *.log
 tools/project-mgmt/.codex-bundle/
 tools/project-mgmt/chat-handoffs/

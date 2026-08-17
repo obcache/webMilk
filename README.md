@@ -12,8 +12,9 @@ The goal is to expose ProjectM's WebGL2/WASM rendering through a small, reusable
 
 ## Design Goals
 
-- Keep the core runtime framework-agnostic.
-- Provide React adapters as a thin layer over the core.
+- Prioritize React and modern browser/Electron renderer consumers.
+- Keep low-level runtime code reusable where it costs little, but do not optimize for legacy or non-React framework interoperability.
+- Provide React adapters as first-class public ergonomics over the runtime.
 - Render ProjectM output into a supplied `HTMLCanvasElement` or `OffscreenCanvas`.
 - Use explicit frame timestamps for deterministic preview/export workflows.
 - Preserve ProjectM state during continuous playback.

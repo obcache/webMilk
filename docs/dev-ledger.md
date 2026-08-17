@@ -65,6 +65,62 @@ Follow-ups
 Rollback Strategy
 - Revert this scaffold commit and return to the initial project-management-only repository state.
 
+### [2026-08-16] Experimental ProjectM WASM Backend Boundary (Status: Complete)
+Author: Codex
+
+Summary
+- Implemented `WasmProjectMBackend` against the expected Emscripten ProjectM module exports.
+- Added WASM memory marshalling for preset strings and interleaved Float32 PCM chunks.
+- Added export resolution for direct ProjectM symbols, Emscripten underscored symbols, and webMilk adapter symbols.
+- Added a C++ ProjectM adapter target and PowerShell build helper for future Emscripten builds.
+
+Impact
+- Areas/modules: src/backends, wasm/projectm-adapter, tools/projectm-wasm, docs
+- Risk: Medium
+
+Validation
+- [x] Run `npm run typecheck`.
+- [x] Run `npm run test`.
+- [x] Run `npm run build`.
+- [x] Run `npm run wasm:projectm` after Emscripten is installed/activated.
+
+Follow-ups
+- [x] Install Ninja or MinGW make so CMake has an Emscripten-compatible generator.
+- [x] Compile the adapter target with `npm run wasm:projectm`.
+- [x] Load generated `webmilk-projectm.js` in the host-style plug-in smoke harness.
+- [x] Validate actual WebGL2 canvas output.
+- [x] Run `npm run test:browser`.
+
+Rollback Strategy
+- Revert the backend boundary and adapter files if the ProjectM Emscripten build proves incompatible.
+
+### [2026-08-16] ProjectM Browser Smoke Harness Pass (Status: Complete)
+Author: Codex
+
+Summary
+- Added a webMilk adapter export that creates and makes current an Emscripten WebGL2 context before ProjectM instance creation.
+- Stopped probing the target canvas with browser `getContext('webgl2')` before Emscripten can claim it.
+- Exported Emscripten heap views required for preset/audio memory marshalling.
+- Confirmed the host-style plug-in runner can load the generated ProjectM WASM module and render through generic frame requests.
+
+Impact
+- Areas/modules: wasm/projectm-adapter, src/backends, tests/browser
+- Risk: Medium
+
+Validation
+- [x] Run `npm run typecheck`.
+- [x] Run `npm run test`.
+- [x] Run `npm run wasm:projectm`.
+- [x] Run `npm run test:browser`.
+- [x] Run `npm run build`.
+
+Follow-ups
+- [ ] Add deterministic pixel/sample assertions beyond the current non-empty canvas smoke check.
+- [ ] Add preset/texture fixture policy after licensing review.
+
+Rollback Strategy
+- Revert the adapter context export and TypeScript context initialization if ProjectM moves to a host-supplied/preinitialized WebGL context contract.
+
 ### [YYYY-MM-DD] Initial Project Bootstrap (Status: Complete)
 Author: reponator
 

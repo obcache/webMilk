@@ -56,11 +56,92 @@ The loader should bind rendering to the supplied canvas rather than creating a h
    - call `projectm_set_frame_time`
    - call `projectm_opengl_render_frame` or FBO variant
 
+## Added webMilk Adapter Target
+
+The repository includes an experimental ProjectM adapter target:
+
+- `wasm/projectm-adapter/CMakeLists.txt`
+- `wasm/projectm-adapter/bindings.cpp`
+
+This target wraps ProjectM's public C API with stable `webmilk_projectm_*` exports. The TypeScript backend accepts either native ProjectM export names or these adapter export names.
+
+Build helper:
+
+```powershell
+npm run wasm:projectm
+```
+
+Default ProjectM source path:
+
+```text
+E:\Production\Coding\projectm
+```
+
+The helper passes this into CMake as:
+
+```text
+-DPROJECTM_ROOT:PATH=E:\Production\Coding\projectm
+```
+
+Expected generated artifact destination:
+
+```text
+public\vendor\projectm\
+src\vendor\projectm\
+```
+
+Those destinations are gitignored until licensing/distribution policy is finalized. The `src\vendor\projectm\` copy exists so Vite can dynamically import the generated Emscripten module during local smoke testing.
+
+The build requires Emscripten tools on PATH:
+
+- `emcmake`
+- `emmake`
+- `emcc`
+
+On Windows, CMake also needs one Emscripten-compatible build tool on PATH:
+
+- preferred: `ninja.exe`
+- alternate: `mingw32-make.exe`
+
+The npm `ninja-build` package is not viable for this project on Windows because it does not support `win32`.
+
+Known install options:
+
+```powershell
+choco install ninja -y
+```
+
+or:
+
+```powershell
+winget install Ninja-build.Ninja
+```
+
+After installing Ninja, restart the terminal or refresh PATH, then run:
+
+```powershell
+& E:\Production\Coding\emsdk\emsdk_env.ps1
+npm run wasm:projectm
+```
+
+Current local status when scaffolded: CMake is available, Emscripten is not on PATH.
+
+Updated local status: Emscripten and Ninja are available, and `npm run wasm:projectm` successfully produced:
+
+- `public\vendor\projectm\webmilk-projectm.js`
+- `public\vendor\projectm\webmilk-projectm.wasm`
+- `src\vendor\projectm\webmilk-projectm.js`
+- `src\vendor\projectm\webmilk-projectm.wasm`
+
+These generated artifacts remain gitignored until licensing/distribution policy is finalized.
+
+The browser smoke path requires the webMilk adapter export `webmilk_projectm_init_webgl_context`. ProjectM's Emscripten GL resolver expects `emscripten_webgl_get_current_context()` to return a current context before `projectm_create()` succeeds. The TypeScript factory therefore lets the Emscripten module create/make-current the canvas context before constructing the ProjectM instance.
+
 ## Validation Milestones
 
-- [ ] Render one frame with no audio.
-- [ ] Render 60 sequential frames with synthetic sine-wave audio.
-- [ ] Confirm canvas output changes over time.
+- [x] Render one frame with no audio.
+- [x] Render 60 sequential frames with synthetic sine-wave audio.
+- [x] Confirm canvas output changes over time.
 - [ ] Confirm reset + warm-up produces stable output for the same target timestamp.
 - [ ] Measure frame cost at 1920x1080.
 - [ ] Measure frame cost at 1080x1920.
